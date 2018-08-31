@@ -1,0 +1,60 @@
+---
+- name: Deploy Inventory DEV template for Cloud-Native Labs at Jenkins World 2018
+  hosts: localhost
+  gather_facts: true
+  run_once: true
+  vars:
+    lab_infra_project: lab-infra
+    user_openshift: developer
+    user_gogs_admin: gogs
+    user_gogs_user: developer
+    user_gogs_password: openshift
+    openshift_cli: oc
+    github_account: openshift-labs
+    github_ref: master
+    project_suffix: 
+    istio_version: 0.7.1
+    clean_init: false
+    template_url: https://raw.githubusercontent.com/openshift-labs/rhsummit18-cloudnative-labs/master/openshift/inventory-dev-template.yml
+  tasks:
+    - include_role:
+        name: openshift_common_facts
+      tags: always
+
+    - name: Verify that variable template_url is set
+      fail:
+        msg: "template_url variable is not defined"
+      when: template_url is not defined
+
+    - name: Verify that variable openshift_cli is set
+      fail:
+        msg: "openshift_cli variable is not defined"
+      when: openshift_cli is not defined
+
+    - name: Get template name
+      shell: "{{ openshift_cli }} create -f {{template_url}} -n openshift --dry-run=true -o name | cut -d'/' -f2"
+      register: cmd_output
+
+    - set_fact: template_name={{cmd_output.stdout}}
+
+    #- debug: msg="Template name is {{template_name}}"
+
+    - name: Check if {{ template_name }} template is already installed
+      shell: "{{ openshift_cli }} get templates -o name -n openshift | grep -q {{ template_name }} && echo true || echo false"
+      register: cmd_output
+
+    - set_fact: template_exist=true
+      when: cmd_output.stdout == "true"
+
+    - set_fact: template_exist=false
+      when: cmd_output.stdout == "false"
+
+    - name: Install {{ template_name }} template
+      shell: "{{ openshift_cli }} create -n openshift -f {{ template_url }}"
+      when: not template_exist
+
+    - name: Replace {{ template_name }} template
+      shell: "{{ openshift_cli }} replace -n openshift -f {{ template_url }}"
+      when: template_exist
+
+
