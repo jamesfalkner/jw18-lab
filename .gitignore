@@ -1,5 +1,6 @@
 ansible/roles/*
 ansible/py3-ansible/*
+ansible.log
 tmp/*
 *.retry
 *.zip
