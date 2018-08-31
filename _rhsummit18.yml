@@ -17,6 +17,7 @@ vars:
   GIT_PASSWORD: "openshift"
   GIT_HOSTNAME: "gogs-lab-infra.apps-GUID.generic.opentlc.com"
   ECLIPSE_CHE_URL: "http://che-lab-infra.apps-GUID.generic.opentlc.com"
+  TERMINAL_URL: "https://master-GUID.generic.opentlc.com:8445"
   NEXUS_EXTERNAL_URL: "http://nexus-lab-infra.apps-GUID.generic.opentlc.com"
   GRAFANA_URL: "http://grafana-istio-system.apps-GUID.generic.opentlc.com"
   JAEGER_URL: "https://jaeger-query-istio-system.apps-GUID.generic.opentlc.com"
@@ -24,6 +25,7 @@ vars:
 
 modules:
   activate:
+  - ansible-intro
   - bootstrap-dev
   - create-catalog
   - config-management

@@ -2,6 +2,8 @@ config:
     renderer: markdown
 
 modules:
+  ansible-intro:
+    name: Ansible Basics
   bootstrap-dev:
     name: Setup Development Environment
   create-catalog:
