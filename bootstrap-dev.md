@@ -17,7 +17,7 @@ A stack is a template of workspace configuration. For example, it includes the p
 in your workspace. Stacks make it possible to recreate identical workspaces with all the tools and needed configuration
 on-demand. 
 
-For this lab, click on the **Java RH Summit** stack and then on the **Create** button. 
+For this lab, click on the **Java JenkinsWorld 2018** stack and then on the **Create** button.
 
 ![Eclipse Che Workspace]({% image_path bootstrap-che-create-workspace.png %}){:width="900px"}
 

@@ -2,7 +2,7 @@ id: "cloudnative"
 name: "Getting Started with Cloud-Native Apps"
 
 content:
-  url: https://raw.githubusercontent.com/openshift-labs/rhsummit18-cloudnative-guides/master
+  url: https://raw.githubusercontent.com/jamesfalkner/jw18-lab/master
 
 vars:
   OPENSHIFT_DOCS_BASE: "https://docs.openshift.com/container-platform/3.9"

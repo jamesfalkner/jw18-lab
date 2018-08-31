@@ -1,6 +1,6 @@
-# Red Hat Summit 2018: <br/>Getting Started with Cloud-Native Applications Lab Guide
+# JenkinsWorld 2018 Lab: <br/>Getting Started with Cloud-Native Applications Lab Guide
 
-Lab guides for the Cloud-Native Lab at Red Hat Summit 2018
+Lab guides for the Cloud-Native Lab at JenkinsWorld 2018
 
 ## Deploy On OpenShift
 
@@ -8,7 +8,7 @@ You can deploy Workshopper as a container image anywhere but most conveniently, 
 
 ```
 $ oc new-app osevg/workshopper --name=guides \
-      -e WORKSHOPS_URLS="https://raw.githubusercontent.com/openshift-labs/rhsummit18-cloudnative-guides/master/_rhsummit18.yml" \
+      -e WORKSHOPS_URLS="https://raw.githubusercontent.com/jamesfalkner/jw18-lab/master/_rhsummit18.yml" \
       -e JAVA_APP=false 
 $ oc expose svc/guides
 ```

@@ -1,5 +1,5 @@
 ---
-- name: Deploy Infra Components for Cloud-Native Labs at Red Hat Summit 2018
+- name: Deploy Infra Components for Cloud-Native Labs at Jenkins World 2018
   hosts: localhost
   gather_facts: true
   run_once: true
@@ -89,8 +89,8 @@
         name: openshift_workshopper
       vars:
         project_name: "{{ lab_infra_project }}"
-        workshopper_content_url_prefix: "https://raw.githubusercontent.com/openshift-labs/rhsummit18-cloudnative-guides/master"
-        workshopper_workshop_urls: "https://raw.githubusercontent.com/openshift-labs/rhsummit18-cloudnative-guides/master/_rhsummit18.yml"
+        workshopper_content_url_prefix: "https://raw.githubusercontent.com/jamesfalkner/jw18-lab/master"
+        workshopper_workshop_urls: "https://raw.githubusercontent.com/jamesfalkner/jw18-lab/master/_rhsummit18.yml"
         workshopper_env_vars:
           OPENSHIFT_MASTER_URL: "https://{{ apps_hostname_suffix | replace('apps', 'master') }}:8443"
           APPS_HOSTNAME_SUFFIX: "{{ apps_hostname_suffix }}"
@@ -157,11 +157,11 @@
       ignore_errors: true
       tags: populate-nexus
     
-    # Populate inventory-dev template
-    - name: Install the inventory-dev template
-      include_tasks: init_template.yml
-      vars:
-        template_url: https://raw.githubusercontent.com/openshift-labs/rhsummit18-cloudnative-labs/master/openshift/inventory-dev-template.yml
+#    # Populate inventory-dev template
+#    - name: Install the inventory-dev template
+#      include_tasks: init_template.yml
+#      vars:
+#        template_url: https://raw.githubusercontent.com/openshift-labs/rhsummit18-cloudnative-labs/master/openshift/inventory-dev-template.yml
 
 
 
