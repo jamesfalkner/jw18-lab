@@ -93,6 +93,7 @@
         workshopper_workshop_urls: "https://raw.githubusercontent.com/jamesfalkner/jw18-lab/master/_rhsummit18.yml"
         workshopper_env_vars:
           OPENSHIFT_MASTER_URL: "https://{{ apps_hostname_suffix | replace('apps', 'master') }}:8443"
+          TERMINAL_URL: "https://{{ apps_hostname_suffix | replace('apps', 'master') }}:8445"
           APPS_HOSTNAME_SUFFIX: "{{ apps_hostname_suffix }}"
           GIT_HOSTNAME: "gogs-{{ lab_infra_project }}.{{ apps_hostname_suffix }}"
           ECLIPSE_CHE_URL: "http://che-{{ lab_infra_project }}.{{ apps_hostname_suffix }}"
