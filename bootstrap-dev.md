@@ -37,9 +37,9 @@ Eclipse Che IDE running in your browser.
 Now you can import the Catalog project skeleton from the git repository directly into your workspace and start 
 working on it.
 
-You should first set the Git name and email so that it marks your commits with your name in the 
+You should first set a Git name and email so that it marks your commits with your name in the
 source code version history. Go to **Profile** > **Preferences** > **Git** > **Committer**, enter 
-your name and email and click on **Save**
+a name and email (you can use your own name/email if you wish, or the sample one shown in the image) and click on **Save**
 
 ![Eclipse Che - Git Config]({% image_path bootstrap-che-git-profile.png %}){:width="600px"}
 
