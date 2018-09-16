@@ -32,6 +32,8 @@ You can click on the left arrow icon to switch to the wide view:
 It takes a little while for the workspace to be ready. When it's ready, you will see a fully functional 
 Eclipse Che IDE running in your browser.
 
+|**NOTE**: If it seems to be taking a long time (more than 1-2 minutes), try reloading the web browser to drop and re-establish connection to the workspace.
+
 ![Eclipse Che Workspace]({% image_path bootstrap-che-workspace.png %}){:width="900px"}
 
 Now you can import the Catalog project skeleton from the git repository directly into your workspace and start 
