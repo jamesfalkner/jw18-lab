@@ -1,6 +1,11 @@
 # JenkinsWorld 2018 Lab: <br/>Getting Started with Cloud-Native Applications Lab Guide
 
-Lab guides for the Cloud-Native Lab at JenkinsWorld 2018
+**INSTRUCTIONS FOR LAB ATTENDEES**: If you came here from the GUID grabber screen, then go back to the GUID
+grabber screen and click the _other_ link that
+points to `http://guides-lab-infra.apps-GUID.generic.opentlc.com`! This README is for the
+actual source code (markdown) for the guides that you will use during the lab:
+
+![GUID Grabber](images/guid.png?raw=true "GUID Grabber")
 
 ## Deploy On OpenShift
 

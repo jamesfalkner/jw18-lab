@@ -11,6 +11,8 @@ deploy software to OpenShift using easy-to-create Ansible Playbooks.
 We'll use the Ansible CLI (Command Line Interface) to perform basic Ansible tasks with a Linux shell. To run these
 commands, access your lab machine using a web-based terminal on your lab environment.
 
+|**NOTE**: The first time you access the terminal, you will get a “Your connection is not private” or other security warning in your browser due to using self-signed certificates. Please click on Advanced and then Proceeed to accept the untrusted certificate (other browsers may have a slightly different process to accept this warning).
+
 [Access the terminal]({{ TERMINAL_URL }}){:target="_blank"} and get started!
 
 ### Log-in to the Terminal
