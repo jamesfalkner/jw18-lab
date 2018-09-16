@@ -16,51 +16,96 @@ You will run a number of Ansible commands using a web-based terminal on your lab
 Username: cloud-user
 Password: r3dh4t1!
 
-## Checkout the Latest Copy
+## Switch to the correct user (root)
 
 ```
-git clone https://github.com/jamesfalkner/jw18-lab.git
+sudo -s -H
 ```
 
 ## Change to the Working Directory
 
 ```
-cd jw18-lab/ansible
+cd $JW18_ANSIBLE
 ```
 
-## View the Playbook
+## Run a Playbook that the Lab Needs
 
 ```
-more init_dev_template.yml
-```
-
-## Install Prerequsite Roles from Galaxy
-
-```
-ansible-galaxy install -r requirements.yml
-```
-
-## Run the playbook (as root)
-
-```
-sudo ansible-playbook init_dev_template.yml
+ansible-playbook init_dev_template.yml
 ```
 
 And the final output should be
 ```
-PLAY RECAP *********************************************************************************
-localhost                  : ok=18   changed=6    unreachable=0    failed=0 
+PLAY RECAP *********************************************************************************  
+localhost                  : ok=18   changed=6    unreachable=0    failed=0  
+```
+
+## Install a Text Editor
+
+This is an ad-hoc Ansible command than runs against localhost (or any host you want) which uses the yum module to install the latest version of the nano package.
+
+```
+ansible localhost -m yum -a "name=nano state=latest"
+```
+
+This could be done as a playbook:
+```
+---
+- hosts: localhost
+  tasks:
+  - yum:
+      name: nano
+      state: latest
+```
+
+## Install Prerequsite Roles from Galaxy
+
+The playbook needs a few roles to run successfully. First let's find the full name by searching Ansible Galaxy.
+
+```
+ansible-galaxy search openshift_common_facts
+```
+
+Then install the role with the fully qualified name.
+
+```
+ansible-galaxy install siamaksade.openshift_common_facts
+```
+
+## Now Let's Install Something
+
+Create a new playbook using our text editor
+
+```
+nano my-playbook.yml
+```
+
+With the contents
+```
+---
+- name: Install nginx container
+  hosts: localhost
+  tasks:
+  - command: oc new-project nginx-lab
+  - command: oc new-app nginx
+  - command: oc get routes
+    register: routes
+  - debug: var=routes
+```
+
+## Run your playbook
+
+```
+ansible-playbook my-playbook.yml
+```
+
+And the final output there should be a HOST/PORT like `https://master-3e6a.rhpds.opentlc.com`
+```
+PLAY RECAP *********************************************************************************  
+localhost                  : ok=18   changed=6    unreachable=0    failed=0  
 ```
 
 ## Voila!
 
 Well done! You are now ready to proceed to the next lab and put your developer hat on and write some code!
-
-## Additional Ansible Information
-
-Would you like to learn Ansible?  
-It’s easy to get started: [ansible.com/get-started](http://ansible.com/get-started)
-
-Want to learn more?
-Videos, webinars, case studies, whitepapers: [ansible.com/resources](http://ansible.com/resources)
 
