@@ -1,0 +1,11 @@
+---
+- name: Install nginx container
+  hosts: localhost
+  tasks:
+  - command: oc new-project webserver
+  - command: oc new-app httpd
+  - command: oc expose svc/httpd
+  - command: oc get route/httpd -n webserver -o jsonpath='{.spec.host}'
+    register: route
+  - debug: var=route
+
