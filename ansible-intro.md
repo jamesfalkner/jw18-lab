@@ -22,6 +22,8 @@ When you access the web terminal, you'll need to login. Use these credentials:
 * Username: `cloud-user`
 * Password: `r3dh4t1!`
 
+![Terminal]({% image_path ansible-terminal.png %}){:width="900px"}
+
 ### Switch to the correct user (`root`)
 
 Ansible can run with many different privilege polices/setups. For this lab we will simply run
@@ -85,10 +87,10 @@ This could also be done as a playbook:
 
 [Ansilble Galaxy](https://galaxy.ansible.com/){:target="_blank"} has thousands of open source pre-created roles you can use in your projects (very much like
 Maven Central, NPM Registry, Docker Hub, etc). Let's find some helpful roles related to OpenShift
-that we can us elater on. These roles do things like query OpenShift for its configuration and then
-set _facts_ that playbooks can use programmatically.
+that we can use later on. These roles do things like query OpenShift for its configuration and then
+set _facts_. Facts are bits of information derived from examining host systems that are stored as variables for later use in a play.
 
-First let's find the full name by searching Ansible Galaxy.
+First let's find the full name of our desired role by searching Ansible Galaxy.
 
 ~~~sh
 ansible-galaxy search openshift_common_facts
@@ -101,6 +103,10 @@ Then install the role with the fully qualified name.
 ~~~sh
 ansible-galaxy install siamaksade.openshift_common_facts
 ~~~
+
+This role will be used later on to inspect the OpenShift cluster you're using and discover facts
+about it (such as login names, URLs, configuration, etc) and can be used to deploy things to OpenShift
+quickly and easily.
 
 ### Create a Playbook to deploy an app to OpenShift
 
@@ -116,7 +122,7 @@ Copy/paste this content into the file:
 
 ~~~yaml
 ---
-- name: Install nginx container
+- name: Install Apache HTTPD container
   hosts: localhost
   tasks:
   - command: oc new-project webserver
@@ -164,7 +170,10 @@ You should get the HTTPD "It works!" screen:
 
 ### Voila!
 
-Well done! You've deployed the lab infrastructure using Ansible and repeatable Playbooks.
+Well done! You've deployed the remaining lab infrastructure using Ansible and repeatable Playbooks.
+These playbooks can be stored in your configuration management database (typically a SCM like Git,
+Subversion, or others.)
+
 You are now ready to proceed and put your developer hat on and write some code with the lab you
 just deployed!
 
