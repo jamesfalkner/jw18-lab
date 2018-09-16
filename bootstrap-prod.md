@@ -21,7 +21,7 @@ name **CoolStore PROD**. Browse the production project in the OpenShift Web Cons
 
 #### Define Release Pipeline
 
-In Eclipse Che, right-click in the in the root of catalog directory and then click on 
+In Eclipse Che, right-click in the root of catalog directory and then click on
 **New** > **File** and name it `Jenkinsfile.release`. Paste the following pipeline definition 
 into `Jenkinsfile.release`:
 
@@ -52,6 +52,8 @@ pipeline {
         }
       }
     }
+    // insert additional stage definitions here
+
   }
 }
 ~~~
@@ -78,7 +80,7 @@ various tests to make sure it can to into production. It's critical to build the
 perform all tests on the exact same release image to ensure the integrity of the release as it is promoted across different
 environments (in this case, _dev > prod_).
 
-Add the `Release Image` stage right after `Release Code` in the `Jenkinsfile.release`
+Add the `Release Image` stage right after `Release Code` in the `Jenkinsfile.release`, just below the `// insert additional stage definitions here` line.
 
 |**CAUTION:** Be sure to place the below code at the correct indentation level, so that the individual `stage{...}` elements are at the same curly-brace level! In particular, be aware of the presence of `stages{...}` as the containing element for all of the `stage{...}` elements.
 
