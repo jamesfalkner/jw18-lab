@@ -2,8 +2,8 @@
 
 ## INSTRUCTIONS FOR LAB ATTENDEES
 
-If you came here from the GUID grabber screen, then go back to the GUID
-grabber screen and click the _other_ link that
+If you came here from the GUID grabber screen, then **go back to the GUID
+grabber screen and click the _other_ link** that
 points to `http://guides-lab-infra.apps-GUID.generic.opentlc.com`! This README is for the
 actual source code (markdown) for the guides that you will use during the lab:
 
