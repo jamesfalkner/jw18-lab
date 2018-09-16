@@ -539,12 +539,12 @@ with their default values.
 
 
 Remember that the Catalog service uses external configurations from a configmap? Well, it needs to have the same config that you did for the test
-so that it can find the Inventory service. This is however is already done via the templates you deployed. In order to verify, in the left-side
+so that it can find the Inventory service. This is however already done via the templates you deployed. In order to verify, in the left-side
 menu click on **Resources** > **Config Maps** and then on **catalog**.
 
 ![Catalog ConfigMap]({% image_path service-to-service-configmap.png %}){:width="640px"}
 
-|**NOTICE:** We mentioned before that Feign has a number of different possibilities to use a service repository like Eureka, but when using OpenShift that is not necessary. OpenShift (and Kubernetes) has a concept of a [Service]({{OPENSHIFT_DOCS_BASE}}/architecture/core_concepts/pods_and_services.html#services){:target="_blank"} that provides built-in service discovery by automatically load-balacing between multiple instances of the same service with a fixed service name that doesn't change  across environments. Later one we will look at how the Istio service mesh can provide more advanced routing and failover.
+|**NOTICE:** We mentioned before that Feign has a number of different possibilities to use a service repository like Eureka, but when using OpenShift that is not necessary. OpenShift (and Kubernetes) has a concept of a [Service]({{OPENSHIFT_DOCS_BASE}}/architecture/core_concepts/pods_and_services.html#services){:target="_blank"} that provides built-in service discovery by automatically load-balacing between multiple instances of the same service with a fixed service name that doesn't change  across environments. Later on we will look at how the Istio service mesh can provide more advanced routing and failover.
 
 Now, that everything is setup we are ready to deploy our new version of the application by commit and push the code changes we have done.
 
