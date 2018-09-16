@@ -190,6 +190,8 @@ in the project explorer and then select **Run Test > Run JUnit Test**.
 
 Verify that the tests are passing green.
 
+|**NOTE:** don't forget to build the project before running the test! **Run** > **Commands Palette** > **build*
+
 |**STEP BY STEP:** Create a Unit test for the Repository
 |![Create a repository]({% image_path create-service-step-by-step-run-test.gif %}){:width="640px"}
 
@@ -278,11 +280,7 @@ running `java -jar target/<app>.jar` directly from a terminal window.
 |**STEP BY STEP:** Run the application locally 
 |![Step by step - run locally]({% image_path create-catalog-step-by-step-run.gif %}){:width="640px"}
 
-|**INFO:** Even if you application is actually running in Eclipse Che on OpenShift 
-it is not running as a proper OpenShift-managed application yet. This development
-flow allows you to develop "locally" on your developer machine and test
-locally before deploying to "real" server. This is a great way for you as a developer 
-to test your own code changes before committing and pushing it to a shared repository.
+|**INFO:** Even if your application is actually running in Eclipse Che on OpenShift, it is not running as a proper OpenShift-managed application yet. This development flow allows you to develop “locally” on your developer machine and test locally before deploying to “real” server. This is a great way for you, as a developer, to test your own code changes before committing and pushing it to a shared repository.
 
 |**NOTE:** The current version of the application does not provide an inventory _quantity_ number. We will look at that in the next section.
 

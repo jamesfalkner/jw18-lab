@@ -48,41 +48,6 @@ Switch to the right directory:
 cd $JW18_ANSIBLE
 ~~~
 
-### Run a Playbook that the Lab Needs
-
-Later on in this lab, when you're working as a developer you'll create and deploy microservices
-to OpenShift using a template. Let's deploy that template now with Ansible:
-
-~~~sh
-ansible-playbook init_dev_template.yml
-~~~
-
-And the final output should be
-
-~~~
-PLAY RECAP *********************************************************************************  
-localhost                  : ok=18   changed=6    unreachable=0    failed=0  
-~~~
-
-### Install a Text Editor
-
-This is an [ad-hoc](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html){:target="_blank"} Ansible command than runs against localhost (or any host you want) which uses the _yum_ module to install the latest version of the _nano_ package (nano is a basic text editor, like `vi` but for ordinary humans).
-
-~~~sh
-ansible localhost -m yum -a "name=nano state=latest"
-~~~
-
-This could also be done as a playbook:
-
-~~~yaml
----
-- hosts: localhost
-  tasks:
-  - yum:
-      name: nano
-      state: latest
-~~~
-
 ### Install Prerequisite Roles from Galaxy
 
 [Ansilble Galaxy](https://galaxy.ansible.com/){:target="_blank"} has thousands of open source pre-created roles you can use in your projects (very much like
@@ -106,58 +71,124 @@ ansible-galaxy install siamaksade.openshift_common_facts
 
 This role will be used later on to inspect the OpenShift cluster you're using and discover facts
 about it (such as login names, URLs, configuration, etc) and can be used to deploy things to OpenShift
-quickly and easily.
+quickly and easily from your playbooks.
 
-### Create a Playbook to deploy an app to OpenShift
+### Run a Playbook that the Lab Needs
 
-Create a new playbook using our _nano_ text editor.
+Later on in this lab, when you're working as a developer you'll create and deploy microservices
+to OpenShift using a template within OpenShift. Let's deploy that template now with Ansible. The
+playbook will use our previously installed dependency `openshift_common_facts`.
 
 ~~~sh
-nano my-playbook.yml
+ansible-playbook init_dev_template.yml
 ~~~
 
-|**NOTE**: Note that Playbooks are written in [YAML](https://en.wikipedia.org/wiki/YAML){:target="_blank"}, where indenting is significant. So be sure to maintain the same indenting for each line while copy/pasting!
+And the final output should be
 
-Copy/paste this content into the file:
+~~~
+PLAY RECAP *********************************************************************************  
+localhost                  : ok=18   changed=6    unreachable=0    failed=0  
+~~~
+
+Inspect the contents of `init_dev_template.yml` and notice the use of `openshift_common_facts`:
+
+~~~yaml
+  tasks:
+    - include_role:
+        name: openshift_common_facts
+      tags: always
+~~~
+
+{% raw  %}
+This role sets several variables related to the OpenShift cluster you have been provided, namely
+the `openshift_cli` fact which can be referenced as `{{ openshift_cli }}` in the playbook.
+{% endraw %}
+
+### Install a Text Editor
+
+We need a simple text editor to write or edit playbooks. Let's install one using an _ad-hoc_ Ansible command.
+
+This is an [ad-hoc](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html){:target="_blank"} Ansible command than runs against localhost (or any host you want) which uses the _yum_ module to install the latest version of the _nano_ package (nano is a basic text editor, like `vi` but for ordinary humans).
+
+~~~sh
+ansible localhost -m yum -a "name=nano state=latest"
+~~~
+
+This could also be done as a playbook:
 
 ~~~yaml
 ---
-- name: Install Apache HTTPD container
-  hosts: localhost
+- hosts: localhost
   tasks:
-  - command: oc new-project webserver
-  - command: oc new-app httpd
-  - command: oc expose svc/httpd
-  - command: oc get route/httpd -n webserver -o jsonpath='{.spec.host}'
-    register: route
-  - debug: var=route
+  - yum:
+      name: nano
+      state: latest
 ~~~
 
-This playbook uses the `command`, `register` and `debug` tasks to deploy Apache HTTPD (a web server) to your lab machine.
-The same kinds of commands are used later on in this lab.
+### Deploy HTTPD to OpenShift using Ansible
 
-Press `CTRL-X` to exit, answering `Y` to save the file with the same filename as above and return to the Bash shell prompt.
-
-### Run your playbook
+There is a sample playbook in on your machine named `init_httpd.yml`. It's a relatively simple
+playbook which installs Apache HTTPD into OpenShift and waits for it to be up and running. Inspect
+the playbook:
 
 ~~~sh
-ansible-playbook my-playbook.yml
+cat init_httpd.yml
 ~~~
 
-One of the `command` tasks used the `register` task to save the output from a command (`oc get route/httpd`)
-as a variable named `route` that can be referenced in the playbook. We output this using the `debug` task on the
-last line of the playbook. This will show you a URL you can use to access the app once it's deployed:
+This Playbook also demonstrates (albeit rather naievely) the characteristic of _idempotency_ - a core tenant of repeatable automated infrastructure.
+Idempotent tasks can be run multiple times and will achieve the same effect without side-effect. Here we can run our playbook as many
+times as we want, as fast as we want, and the end result will always be the same (HTTPD will be installed).
+
+### Run the HTTPD playbook
+
+Run the playbook:
+
+~~~sh
+ansible-playbook init_httpd.yml
+~~~
+
+
+This playbook uses the `command` and a few other modules and tasks to deploy Apache HTTPD (a web server) to your lab machine.
+The same kinds of commands are used later on in this lab.
+
+Did it work? Probably not. There is a bug in the playbook! The problem is that out of the box,
+the Apache HTTPD server has a test page that can be accessed to make sure the server is working,
+however this test page returns an HTTP `403 Forbidden` error by design, not a `200 OK`. Our httpd
+server is working, but the playbook isn't right. Let's fix it with our handy nano text editor:
+
+~~~sh
+nano init_httpd.yml
+~~~
+
+In the editor, use the arrow keys to navigate to the bottom of the Playbook where you see two places
+that need to change from `200` to `403`. Make the changes by backspacing over the `200`'s and replace
+with `403` so that the end looks like:
+
+~~~yaml
+  - name: wait for httpd to be running
+    uri:
+      url: "http://httpd-webserver.{{ apps_hostname_suffix }}"
+      status_code: 403
+    register: result
+    until: result.status == 403
+    retries: 10
+    delay: 2
+~~~
+
+Press `CTRL-X` and save the file when prompted. You should end up back at the Bash shell prompt.
+
+Re-run the playbook (it's idempotent, right?) to test our fix:
+
+~~~sh
+ansible-playbook init_httpd.yml
+~~~
+
+You may see a few things that look like errors or failures as Ansible retries a few times, but eventually
+you'll see success:
 
 ~~~
-TASK [debug] *****************************************************************************************************************************************
-ok: [localhost] => {
-    "route": {
-        ...
-        "stdout_lines": [
-            "httpd-webserver.apps-GUID.generic.opentlc.com"
-        ]
-    }
-}
+PLAY RECAP *******************************************************************************************************************************************
+localhost                  : ok=19   changed=8    unreachable=0    failed=0
 ~~~
 
 ### Test the app

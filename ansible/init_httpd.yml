@@ -1,0 +1,36 @@
+---
+- name: Install Apache HTTPD container
+  hosts: localhost
+  tasks:
+  - include_role:
+      name: openshift_common_facts
+    tags: always
+
+  - name: clean up server
+    command: "{{ openshift_cli }} delete project webserver"
+    ignore_errors: true
+    tags: always
+
+  - name: wait for the project to really be gone
+    command: "{{ openshift_cli }} get project webserver"
+    ignore_errors: true
+    register: result
+    until: result is failed
+    retries: 20
+    delay: 5
+
+  - name: Create webserver project
+    command: "{{ openshift_cli }} new-project webserver"
+  - name: Deploy webserver
+    command: "{{ openshift_cli }} new-app httpd"
+  - name: Expose httpd service
+    command: "{{ openshift_cli }} expose svc/httpd"
+
+  - name: wait for httpd to be running
+    uri:
+      url: "http://httpd-webserver.{{ apps_hostname_suffix }}"
+      status_code: 200
+    register: result
+    until: result.status == 200
+    retries: 10
+    delay: 2
