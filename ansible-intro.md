@@ -28,7 +28,7 @@ on Ansible and privileges.
 
 Run the `sudo` command to become the `root` user:
 
-~~~bash
+~~~sh
 sudo -s -H
 ~~~
 
@@ -40,7 +40,7 @@ Playbook for automating deployments to multiple machines!).
 
 Switch to the right directory:
 
-~~~bash
+~~~sh
 cd $JW18_ANSIBLE
 ~~~
 
@@ -64,7 +64,7 @@ localhost                  : ok=18   changed=6    unreachable=0    failed=0
 
 This is an [ad-hoc](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html){:target="_blank"} Ansible command than runs against localhost (or any host you want) which uses the _yum_ module to install the latest version of the _nano_ package (nano is a basic text editor, like `vi` but for ordinary humans).
 
-~~~
+~~~sh
 ansible localhost -m yum -a "name=nano state=latest"
 ~~~
 
@@ -79,7 +79,7 @@ This could also be done as a playbook:
       state: latest
 ~~~
 
-### Install Prerequsite Roles from Galaxy
+### Install Prerequisite Roles from Galaxy
 
 [Ansilble Galaxy](https://galaxy.ansible.com/){:target="_blank"} has thousands of open source pre-created roles you can use in your projects (very much like
 Maven Central, NPM Registry, Docker Hub, etc). Let's find some helpful roles related to OpenShift
@@ -88,7 +88,7 @@ set _facts_ that playbooks can use programmatically.
 
 First let's find the full name by searching Ansible Galaxy.
 
-~~~bash
+~~~sh
 ansible-galaxy search openshift_common_facts
 ~~~
 
@@ -96,7 +96,7 @@ The `search` command returns the list of roles that match the query term.
 
 Then install the role with the fully qualified name.
 
-~~~bash
+~~~sh
 ansible-galaxy install siamaksade.openshift_common_facts
 ~~~
 
@@ -104,7 +104,7 @@ ansible-galaxy install siamaksade.openshift_common_facts
 
 Create a new playbook using our _nano_ text editor.
 
-~~~bash
+~~~sh
 nano my-playbook.yml
 ~~~
 
@@ -132,7 +132,7 @@ Press `CTRL-X` to exit, answering `Y` to save the file with the same filename as
 
 ### Run your playbook
 
-~~~bash
+~~~sh
 ansible-playbook my-playbook.yml
 ~~~
 
