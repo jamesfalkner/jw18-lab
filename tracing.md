@@ -1,13 +1,15 @@
 ## Distributed Tracing
 
-Before we start this scenario issue the following command
+Before we start this scenario issue the following commands
 
 ~~~shell
 oc env -n prod{{PROJECT_SUFFIX}} dc/inventory SERVICE_DELAY=400 --overwrite 
 oc rollout status dc/inventory -n prod{{PROJECT_SUFFIX}}
+oc set probe dc/catalog --liveness --readiness --remove -n prod{{PROJECT_SUFFIX}}
+oc rollout status dc/inventory -n prod{{PROJECT_SUFFIX}}
 ~~~
 
-|**NOTE:** This command will introduce a delay in our inventory service so that each call will take > 400ms
+|**NOTE:** These commands will introduce an artificial delay in our inventory service so that each call will take > 400ms. The commands also remove the kubernetes _liveness_ and _readiness_ probes from the Catalog service, to not interfere with traces and make the tracing output clearer.
 
 Fast forward a few weeks: our first release is now in production, but now we are getting notifications from our operations team that calls
 to `/services/products` are taking over 2 seconds to respond. Our first task will be to investigate why that is. First, let's see if we can reproduce the issue.
