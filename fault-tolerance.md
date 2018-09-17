@@ -167,6 +167,8 @@ spec:
 EOF
 ~~~
 
+|**NOTE:** The above `cat` command sends its output directly to `oc create -f -` which reads it and stores it internally. The command never creates a file on-disk. To verify it was created properly you can always fetch it with `oc get routerule/inventory-v1-route -o yaml`
+
 Now, add the circuit breaker by creating an Istio [Destination Policy](https://istio.io/docs/concepts/traffic-management/rules-configuration.html#destination-policies) which
 is used to create circuit breakers:
 
