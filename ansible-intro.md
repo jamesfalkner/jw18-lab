@@ -48,6 +48,8 @@ Switch to the right directory:
 cd $JW18_ANSIBLE
 ~~~
 
+|**NOTE**: This terminal uses HTTP long polling requests to keep the connection open. If there is no activity within 1 minute, you may get disconnected. In this case, reload your browser and re-connect and re-issue the `sudo` and `cd` commands!
+
 ### Install Prerequisite Roles from Galaxy
 
 [Ansilble Galaxy](https://galaxy.ansible.com/){:target="_blank"} has thousands of open source pre-created roles you can use in your projects (very much like
