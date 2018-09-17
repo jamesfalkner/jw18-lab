@@ -212,7 +212,7 @@ public class ProductEndpoint {
 ~~~
 
 Annotate the class with `@Controller` to tell Spring that this is a controller bean. Also annotate it 
-with `@RequestMapping` specifying that this controller will be handling request to `/service/*` like this:
+with `@RequestMapping` specifying that this controller will be handling request to `/services/*` like this:
 
 ~~~java
 @Controller
