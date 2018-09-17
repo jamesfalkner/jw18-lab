@@ -4,9 +4,9 @@ Before we start this scenario issue the following commands
 
 ~~~shell
 oc env -n prod{{PROJECT_SUFFIX}} dc/inventory SERVICE_DELAY=400 --overwrite 
-oc rollout status dc/inventory -n prod{{PROJECT_SUFFIX}}
 oc set probe dc/catalog --liveness --readiness --remove -n prod{{PROJECT_SUFFIX}}
 oc rollout status dc/inventory -n prod{{PROJECT_SUFFIX}}
+oc rollout status dc/catalog -n prod{{PROJECT_SUFFIX}}
 ~~~
 
 |**NOTE:** These commands will introduce an artificial delay in our inventory service so that each call will take > 400ms. The commands also remove the kubernetes _liveness_ and _readiness_ probes from the Catalog service, to not interfere with traces and make the tracing output clearer.
