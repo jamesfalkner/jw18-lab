@@ -18,6 +18,9 @@ And then choose the following.
 OpenShift: <br/>
 [{{ OPENSHIFT_MASTER_URL }}]({{ OPENSHIFT_MASTER_URL }}){:target="_blank"} 
 
+OpenShift Master Bash Shell: <br/>
+[{{ TERMINAL_URL }}]({{ TERMINAL_URL }}){:target="_blank"}
+
 Eclipse Che: <br/>
 [{{ ECLIPSE_CHE_URL }}]({{ ECLIPSE_CHE_URL }}){:target="_blank"} 
 
@@ -46,3 +49,6 @@ OpenShift Password: `{{ OPENSHIFT_PASSWORD }}` <br/>
 
 Git Username: `{{ GIT_USERNAME }}` <br/>
 Git Password: `{{ GIT_PASSWORD }}` <br/>
+
+Bash Shell username: `cloud-user` <br/>
+Bash Shell password: `r3dh4t1!` <br/>
