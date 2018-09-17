@@ -182,7 +182,7 @@ Check that the response time is now ~400-500ms (since the `inventory` service in
 |**NOTE:** The first call after the deployment may take a bit longer as things get warmed up
 
 You can also verify that by opening the 
-[Jaeger Query Console](http://jaeger-query-istio-system.{{APPS_HOSTNAME_SUFFIX}}){:target="_blank"} and specifying the following query:
+[Jaeger Query Console](https://jaeger-query-istio-system.{{APPS_HOSTNAME_SUFFIX}}){:target="_blank"} and specifying the following query:
 
 |Property|Value|
 |--------|--------|
